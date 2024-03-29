@@ -11,7 +11,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\UserLogController;
-
+use App\Http\Controllers\LogController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -195,6 +195,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::fallback(function() {
         return view('pages/utility/404');
     });
-    Route::get('/user-logs', [UserLogController::class, 'index'])->middleware(['auth', 'verified'])->name('user-logs');
-
+    Route::get('/user-logs', [UserLogController::class, 'getLogs'])->name('user-logs.getLogs');
+    Route::get('logs/data', [UserLogController::class, 'getLogs'])->name('logs.data');
+    Route::delete('/logs/delete/{id}', [UserLogController::class, 'deleteLog'])->name('logs.delete');
 });

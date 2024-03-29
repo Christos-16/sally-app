@@ -62,17 +62,26 @@
             @endif
 
             @if ($showingRecoveryCodes)
+                {{-- Recovery Codes Section --}}
                 <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
                     <p class="font-semibold">
                         {{ __('Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.') }}
                     </p>
                 </div>
 
-                <div class="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 dark:bg-gray-900 dark:text-gray-100 rounded-lg">
+                <div class="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 dark:bg-gray-900 dark:text-gray-100 rounded-lg" id="recovery-codes">
                     @foreach (json_decode(decrypt($this->user->two_factor_recovery_codes), true) as $code)
                         <div>{{ $code }}</div>
                     @endforeach
                 </div>
+
+                <x-button type="button" onclick="copyRecoveryCodes()" class="mt-2">
+                    {{ __('Copy Recovery Codes') }}
+                </x-button>
+                <!-- Add the new button -->
+                <x-button type="button" onclick="downloadRecoveryCodes()" class="mt-2">
+                    {{ __('Download Recovery Codes') }}
+                </x-button>
             @endif
         @endif
 
@@ -122,3 +131,25 @@
         </div>
     </x-slot>
 </x-action-section>
+<script>
+    function copyRecoveryCodes() {
+        let recoveryCodes = document.getElementById('recovery-codes').innerText;
+        navigator.clipboard.writeText(recoveryCodes).then(function() {
+            alert('{{ __("Recovery codes copied to clipboard!") }}');
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+        });
+    }
+
+    // Add the new JavaScript function
+function downloadRecoveryCodes() {
+    let recoveryCodes = document.getElementById('recovery-codes').innerText;
+    let blob = new Blob([recoveryCodes], {type: "text/plain;charset=utf-8"});
+    let url = URL.createObjectURL(blob);
+    let link = document.createElement('a');
+    link.href = url;
+    link.download = 'recovery_codes.txt';
+    link.click();
+}
+</script>
+
