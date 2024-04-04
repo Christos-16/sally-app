@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>User Logs</title>
     <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" rel="stylesheet">
@@ -36,10 +35,6 @@
     padding-left: 0;
     margin-left: 0;
 }
-
-
-
-
 </style>
 
 <body>
@@ -57,9 +52,12 @@
             <table class="min-w-full yajra-table" id="logs-table">
                 <thead>
                     <tr class="text-left">
-                        <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Date</th>
-                        <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">User</th>
-                        <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Action</th>
+                        <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Timestamp</th>
+                        <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">ID</th>
+                       <!-- <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Action</th>-->
+                        <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Conversation</th>
+                        <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">No of Turns (Words)</th>
                     </tr>
                 </thead>
             </table>
@@ -74,35 +72,48 @@
             processing: true,
             serverSide: true,
             ajax: '{{ route('logs.data') }}',
-            order: [[ 0, "desc" ]],
+            order: [[0, "desc"]],
             dom: 'Bfrtip',
-            buttons: [
-                'csvHtml5'
-            ],
+            buttons: ['csvHtml5'],
             columns: [
-                {
-                    data: 'created_at',
-                    name: 'created_at',
-                    render: function(data, type, row) {
-                        var date = new Date(data);
-                        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-                    }
-                },
-                { data: 'user', name: 'user' },
-                {
-                    data: 'id',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    render: function(data, type, row) {
-                        return `<button onclick="deleteLog(${data})" class="delete-btn">Delete</button>`;
-                    }
+            {
+                data: 'created_at',
+                name: 'created_at'
+            },
+            {
+                data: 'user',
+                name: 'user.id'
+            },
+            /*{
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false
+            },*/
+            {
+                data: 'email',
+                name: 'user.email'
+            },
+            {
+                data: 'conversation',
+                name: 'conversation',
+                render: function(data, type, row) {
+                    return data ? '<a href="/fulltext?data=' + encodeURIComponent(data) + '" target="_blank">' + data.substring(0, 10) + '...' + '</a>' : '';
                 }
-            ]
+            },
+            {
+                data: 'no_of_turns_words',
+                name: 'no_of_turns_words',
+                defaultContent: "",
+                orderable: true,
+                searchable: true
+            }
+        ]
+
         });
     });
 
-    function deleteLog(id) {
+     /*function deleteLog(id) {
         if(confirm('Are you sure you want to delete this log?')) {
             $.ajax({
                 url: `/logs/delete/${id}`,
@@ -111,7 +122,7 @@
                     _token: $('meta[name="csrf-token"]').attr('content'),
                 },
                 success: function(response) {
-                    $('#logs-table').DataTable().ajax.reload(null, false); // Reload DataTables without resetting paging
+                    $('#logs-table').DataTable().ajax.reload(null, false);
                     alert('Log deleted successfully');
                 },
                 error: function(response) {
@@ -119,7 +130,7 @@
                 }
             });
         }
-    }
+    }*/
     </script>
 
 

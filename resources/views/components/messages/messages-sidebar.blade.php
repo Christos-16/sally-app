@@ -28,7 +28,7 @@
                                 </svg>
                             </button>
                             <div
-                                class="origin-top-right z-10 absolute top-full left-0 min-w-60 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1"                
+                                class="origin-top-right z-10 absolute top-full left-0 min-w-60 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1"
                                 @click.outside="open = false"
                                 @keydown.escape.window="open = false"
                                 x-show="open"
@@ -38,7 +38,7 @@
                                 x-transition:leave="transition ease-out duration-200"
                                 x-transition:leave-start="opacity-100"
                                 x-transition:leave-end="opacity-0"
-                                x-cloak                
+                                x-cloak
                             >
                                 <ul>
                                     <li>

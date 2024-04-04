@@ -12,6 +12,9 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\UserLogController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -198,4 +201,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/user-logs', [UserLogController::class, 'getLogs'])->name('user-logs.getLogs');
     Route::get('logs/data', [UserLogController::class, 'getLogs'])->name('logs.data');
     Route::delete('/logs/delete/{id}', [UserLogController::class, 'deleteLog'])->name('logs.delete');
+    Route::get('/messages/{conversationId}', [ConversationController::class, 'show'])->name('conversations.show');
+    Route::get('/conversations/{id}/full', [ConversationController::class, 'showFull'])->name('conversations.showFull');
+    Route::get('/messages/{id}', [MessageController::class, 'show'])->name('messages.show');
+    Route::get('/full-conversation/{id}', [ConversationController::class, 'showFullConversation'])->name('full-conversation.show');
+    Route::get('/fulltext', 'App\Http\Controllers\FullTextController@show');
 });

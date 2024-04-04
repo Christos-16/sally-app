@@ -8,7 +8,7 @@
         :class="{ 'bg-slate-200': open }"
         aria-haspopup="true"
         @click.prevent="open = !open"
-        :aria-expanded="open"                        
+        :aria-expanded="open"
     >
         <span class="sr-only">Info</span>
         <svg class="w-4 h-4" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -16,7 +16,7 @@
         </svg>
     </button>
     <div
-        class="origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1 {{$align === 'right' ? 'right-0' : 'left-0'}}"                
+        class="origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1 {{$align === 'right' ? 'right-0' : 'left-0'}}"
         @click.outside="open = false"
         @keydown.escape.window="open = false"
         x-show="open"
@@ -26,7 +26,7 @@
         x-transition:leave="transition ease-out duration-200"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        x-cloak                    
+        x-cloak
     >
         <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">Need help?</div>
         <ul>
@@ -55,6 +55,6 @@
                     <span>Contact us</span>
                 </a>
             </li>
-        </ul>                
+        </ul>
     </div>
 </div>

@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserLog extends Model
 {
-    protected $fillable = ['action', 'user_id'];
+protected $fillable = ['action', 'user_id', 'new_column1', 'new_column2', 'no_of_words'];
+
 
     public function user()
     {

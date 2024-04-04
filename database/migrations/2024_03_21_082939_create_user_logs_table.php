@@ -12,7 +12,10 @@ class CreateUserLogsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('action');
+            $table->string('new_column1');
+            $table->string('new_column2');
             $table->timestamps();
+            $table->unsignedInteger('no_of_words')->default(0);
         });
     }
 
